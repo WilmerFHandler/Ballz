@@ -60,6 +60,8 @@ public class ScreenColliderManager : MonoBehaviour
         bottom.transform.position = position;
         BoxCollider2D collider = bottom.AddComponent<BoxCollider2D>();
         collider.size = size;
+
+        collider.isTrigger = true;
     }
     
 }
