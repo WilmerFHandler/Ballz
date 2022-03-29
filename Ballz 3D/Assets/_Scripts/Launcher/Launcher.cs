@@ -7,17 +7,30 @@ public class Launcher : MonoBehaviour
 {
     public event Action OnShoot;
     [SerializeField] GameObject ballPrefab;
-    [SerializeField] InputProviderLauncher input;
+    [SerializeField] GameObject preview;
 
     [Range(0f, 1f)]
     [SerializeField] float timeBetweenShots;
 
-    [HideInInspector] public int numberOfBalls = 10;
+    public LauncherInputs input;
+
+    public int numberOfBalls = 10;
     bool isShooting;
+
+    void Awake()
+    {
+        input = new LauncherInputs();
+    }
+
+    void Update()
+    {
+        EnableAndDisablePreview();
+    }
 
     public void Fire(Vector2 aimDirection)
     {
         if(isShooting) return;
+        if(!canShoot(aimDirection)) return;
 
             StartCoroutine(IShoot(aimDirection));
     }
@@ -47,5 +60,24 @@ public class Launcher : MonoBehaviour
     public void RoundFinished()
     {
         isShooting = false;
+    }
+
+    void EnableAndDisablePreview()
+    {
+        if(preview == null) return;
+        if(preview.activeInHierarchy == canShoot(input.aimDirection)) return;
+
+        preview.SetActive(canShoot(input.aimDirection));
+    }
+
+    bool canShoot(Vector2 aimDirection)
+    {
+        if(isShooting) return false;
+        return(aimDirection != Vector2.zero);
+    }
+
+    public class LauncherInputs
+    {
+        [HideInInspector] public Vector2 aimDirection;
     }
 }

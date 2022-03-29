@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScreenColliderManager : MonoBehaviour
 {
     [SerializeField] GameObject top, left, right, bottom;
+    [SerializeField] PhysicsMaterial2D physicsMaterial;
     float _colliderWidth = 1f;
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class ScreenColliderManager : MonoBehaviour
         top.transform.position = position;
         BoxCollider2D collider = top.AddComponent<BoxCollider2D>();
         collider.size = size;
+        collider.sharedMaterial = physicsMaterial;
     }
     void CreateLeftCollider(Vector3 bottomLeftScreenPoint, Vector3 topRightScreenPoint, Vector3 centerScreenPoint)
     {
@@ -42,6 +44,7 @@ public class ScreenColliderManager : MonoBehaviour
         left.transform.position = position;
         BoxCollider2D collider = left.AddComponent<BoxCollider2D>();
         collider.size = size;
+        collider.sharedMaterial = physicsMaterial;
     }
     void CreateRightCollider(Vector3 bottomLeftScreenPoint, Vector3 topRightScreenPoint, Vector3 centerScreenPoint)
     {
@@ -51,6 +54,7 @@ public class ScreenColliderManager : MonoBehaviour
         right.transform.position = position;
         BoxCollider2D collider = right.AddComponent<BoxCollider2D>();
         collider.size = size;
+        collider.sharedMaterial = physicsMaterial;
     }
     void CreateBottomCollider(Vector3 bottomLeftScreenPoint, Vector3 topRightScreenPoint, Vector3 centerScreenPoint)
     {
@@ -63,5 +67,4 @@ public class ScreenColliderManager : MonoBehaviour
 
         collider.isTrigger = true;
     }
-    
 }

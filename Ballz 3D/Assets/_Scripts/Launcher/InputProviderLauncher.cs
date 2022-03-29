@@ -14,6 +14,9 @@ public class InputProviderLauncher : MonoBehaviour
     Vector2 startMousePosition;
     bool isAiming;
 
+    [SerializeField] Launcher launcher;
+    [SerializeField] LaunchPreview preview;
+
     void OnEnable()
     {
         if(controls == null)
@@ -34,6 +37,9 @@ public class InputProviderLauncher : MonoBehaviour
     void Update()
     {
         UpdateAimingDirection();
+
+        UpdateLauncherInputs();
+        UpdatePreviewInputs();
     }
 
     void UpdateAimingDirection()
@@ -53,5 +59,15 @@ public class InputProviderLauncher : MonoBehaviour
         isAiming = true;
 
         startMousePosition = controls.Gameplay.Aim.ReadValue<Vector2>();
+    }
+
+    void UpdateLauncherInputs()
+    {
+        launcher.input.aimDirection = aimDirection;
+    }
+    void UpdatePreviewInputs()
+    {
+        if(!preview.gameObject.activeInHierarchy) return;
+        preview.input.aimDirection = aimDirection;
     }
 }
